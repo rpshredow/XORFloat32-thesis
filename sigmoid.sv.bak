@@ -1,0 +1,29 @@
+module sigmoid(
+	input clk,
+	input [31:0] in,
+	output [31:0] out
+);
+
+wire [31:0] expOutAddIn;
+wire [31:0] addOutInvIn;
+
+expo	expo_inst (
+	.clock ( clk ),
+	.data ( in ),
+	.result ( expOutAddIn )
+	);
+	
+add	add_inst (
+	.clock ( clk ),
+	.dataa ( expOutAddIn ),
+	.datab ( 32'b00111111100000000000000000000000 ),
+	.result ( addOutInvIn )
+	);
+	
+inverse	inverse_inst (
+	.clock ( clk ),
+	.data ( addOutInvIn ),
+	.result ( out )
+	);
+
+endmodule
